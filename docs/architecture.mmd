@@ -1,0 +1,11 @@
+flowchart LR
+    U[User / Web App] -->|Upload original image| S3IN[(Amazon S3<br/>Source bucket<br/>incoming/)]
+    S3IN -->|ObjectCreated event| Q[[Amazon SQS Standard Queue]]
+    Q -->|Event source mapping| L[AWS Lambda<br/>Validate + resize]
+    L -->|Read original| S3IN
+    L -->|Write thumbnail| S3OUT[(Amazon S3<br/>Destination bucket<br/>thumbnails/)]
+    Q -. redrive after repeated failures .-> DLQ[[Amazon SQS DLQ]]
+    L --> CW[Amazon CloudWatch<br/>Logs + metrics]
+    IAM[AWS IAM<br/>Least-privilege role] -. authorizes .-> L
+    S3IN -. private + encryption .-> SEC[Security controls]
+    S3OUT -. private + encryption .-> SEC

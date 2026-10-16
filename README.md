@@ -119,3 +119,17 @@ The unit test validates the input-key guard without calling AWS. A full end-to-e
 10. Test an unsupported file and confirm failure handling / DLQ behavior.
 11. Capture screenshots of resources, successful output, and logs. Delete resources when no longer needed.
 
+Refer to AWS documentation for exact current console steps and runtime packaging requirements.
+
+## 13. Acceptance criteria
+- [ ] An image uploaded under `incoming/` creates an SQS message.
+- [ ] Lambda successfully processes a supported image.
+- [ ] A thumbnail appears in the destination bucket.
+- [ ] Unsupported/corrupt files fail safely and can be investigated.
+- [ ] Source and destination buckets remain private.
+- [ ] IAM follows least privilege.
+- [ ] Logs and DLQ are available for troubleshooting.
+- [ ] Screenshots and test results are added to the repository after real deployment.
+
+## 14. Reviewer summary
+This project demonstrates an event-driven, decoupled, serverless architecture using Amazon S3, Amazon SQS, AWS Lambda, IAM, and CloudWatch. It addresses scalability, fault isolation, security, observability, and cost awareness. Advanced services are listed as future enhancements rather than claimed as implemented.
